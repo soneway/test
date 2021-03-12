@@ -1,0 +1,41 @@
+<html>
+  <head>
+    <title>proxy</title>
+  </head>
+  <body>
+    <script>
+    (async () => {
+      const www = new Proxy(new URL('http://www'), {
+        get: function get(target, prop) {
+          let value = Reflect.get(target, prop)
+
+          // 函数调用, 如www.toString
+          if (typeof value === 'function') {
+            return value.bind(target)
+          }
+
+          // 调用属性不是string时, 如Symbol
+          if (typeof prop !== 'string') {
+            return value
+          }
+
+          // 调用then时, 转化为Promise
+          if (prop === 'then') {
+            console.log('then', target, prop)
+            return Promise.prototype.then.bind(fetch(target))
+          }
+
+          // 将属性加到域名中, 并包装成Proxy
+          console.log(target, prop)
+          target = new URL(target)
+          target.hostname += `.${prop}`
+          return new Proxy(target, { get })
+        },
+      })
+
+      const res = await www.baidu.com
+      console.log(res)
+    })()
+    </script>
+  </body>
+</html>

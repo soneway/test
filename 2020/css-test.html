@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>test</title>
+    <style type="text/css">
+    p:target {
+      background-color: gold;
+    }
+
+    /* 在目标元素中增加一个伪元素*/
+    p:target::before {
+      font: 70% sans-serif;
+      content: ">";
+      color: limegreen;
+      margin-right: .25em;
+    }
+
+    /*在目标元素中使用italic样式*/
+    p:target i {
+      color: red;
+    }
+    </style>
+  </head>
+  <body>
+    <h3>Table of Contents</h3>
+    <ol>
+      <li><a href="#p1">Jump to the first paragraph!</a></li>
+      <li><a href="#p2">Jump to the second paragraph!</a></li>
+      <li><a href="#nowhere">This link goes nowhere, because the target doesn't exist.</a></li>
+    </ol>
+
+    <h3>My Fun Article</h3>
+    <p id="p1">You can target <i>this paragraph</i> using a URL fragment. Click on the link above to try out!</p>
+    <p id="p2">This is <i>another paragraph</i>, also accessible from the links above. Isn't that delightful?</p>
+  </body>
+</html>

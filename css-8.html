@@ -1,0 +1,63 @@
+<html>
+  <head>
+    <title>test</title>
+    <style>
+    .btn:hover + .panel, .panel:hover {
+      visibility: visible
+    }
+
+    .panel {
+      visibility: hidden;
+      width: 100px;
+      height: 200px;
+      background: #ddd;
+      transition: visibility 0.2s;
+    }
+
+    .panel-item {
+      width: 100%;
+      height: 50px;
+      list-style: none;
+      line-height: 50px;
+    }
+
+    .input-control:placeholder-shown::placeholder {
+      color: transparent;
+    }
+
+    .input-box {
+      position: relative;
+    }
+
+    .input-label {
+      position: absolute;
+      left: 16px;
+      top: 14px;
+      pointer-events: none;
+      transition: all 0.2s;
+    }
+
+    .input-control:not(:placeholder-shown) ~ .input-label,
+    .input-control:focus ~ .input-label {
+      color: #2486ff;
+      transform: scale(0.75) translate(-2px, -32px);
+    }
+    </style>
+  </head>
+  <body>
+    <button class="btn">菜单</button>
+    <ul class="panel">
+      <li class="panel-item">苹果</li>
+      <li class="panel-item">葡萄</li>
+      <li class="panel-item">香蕉</li>
+      <li class="panel-item">橙子</li>
+    </ul>
+
+    <div class="input-box">
+      <input
+        class="input-control input-outline"
+        placeholder="账号">
+      <label class="input-label">账号</label>
+    </div>
+  </body>
+</html>

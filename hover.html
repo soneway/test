@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>test</title>
+    <style>
+    .container{
+      width: 100px;
+      height:100px;
+      position: relative;
+      background: #ff0000;
+    }
+    .container:hover {
+        background: #ddd;
+    }
+
+    .menu{
+      position: absolute;
+      left:110px;
+      top:50px;
+      visibility: hidden;
+      background: blue;
+      z-index: 1;
+    }
+
+    .container:hover .menu{
+      visibility: visible;
+    }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="menu">
+        <p>1</p>
+        <p>2</p>
+      </div>
+    </div>
+    <div class="container"></div>
+  </body>
+</html>
