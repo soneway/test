@@ -1,0 +1,83 @@
+<html>
+  <head>
+    <title>flex</title>
+    <style>
+    body {
+        padding: 0;
+        margin: 0;
+    }
+
+    .flex-wrap {
+        display: flex;
+        height: 100vh;
+        background: #ddd;
+    }
+
+    .flex-item {
+        box-sizing: border-box;
+        width: 300px;
+        height: 300px;
+        background: #f00;
+        border: 1px solid #000;
+    }
+    </style>
+  </head>
+  <body>
+
+    <!--align-content有值时, align-self失效-->
+    <div class="flex-wrap" style="flex-wrap: wrap; align-items: center; align-content: space-evenly;">
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item" style="align-self: flex-start;">1</div>
+    </div>
+
+    <!--设置换行-->
+    <div class="flex-wrap" style="flex-wrap: wrap; align-content: flex-start">
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+    </div>
+
+    <!--item总宽度小于wrap宽度, inline-flex会自适应item宽度-->
+    <div class="flex-wrap" style="display: inline-flex">
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+    </div>
+
+    <!--item总宽度小于wrap宽度, inline-flex会自适应item宽度-->
+    <div class="flex-wrap" style="display: inline-flex">
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+    </div>
+
+    <!--item总宽度小于wrap宽度-->
+    <div class="flex-wrap">
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+    </div>
+
+    <!--item总宽度小于wrap宽度-->
+    <div class="flex-wrap">
+      <div class="flex-item">1</div>
+      <div class="flex-item">1</div>
+    </div>
+  </body>
+</html>

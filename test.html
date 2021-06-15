@@ -1,0 +1,57 @@
+<html>
+  <head>
+    <title>test</title>
+    <style>
+    div {
+        width: 300px;
+        height: 300px;
+        background: #ddd;
+        border-radius: 4px;
+        box-shadow: 0 -2px 0 0 #f00;
+    }
+    </style>
+  </head>
+  <body>
+    <div>
+      <img style="width:414px;" src="Lark20210427-171821.png" />
+    </div>
+
+    <script>
+
+    function addOne(x) {
+      return x + 1;
+    }
+
+    function addTwo(x) {
+      return x + 2;
+    }
+
+
+    function addNum(x, num) {
+      return x + num;
+    }
+
+    // addOne(x) => addNum(x, 1)
+
+    function getPersonAndSetAge(persons, id, age) {
+      const person = persons.find((item) => item.id === id);
+      person.age = age;
+    }
+
+    function getPerson(persons, id) {
+      return persons.find((item) => item.id === id);
+    }
+
+    function setAge(person, age) {
+      person.age = age;
+    }
+
+    function getPersonAndSetAge(persons, id, age) {
+      const person = getPerson(persons, id);
+      setAge(person, age);
+    }
+
+
+    </script>
+  </body>
+</html>
