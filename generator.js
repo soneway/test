@@ -29,7 +29,7 @@ function run(generator) {
     const g = generator();
 
     function next(value) {
-      // 获取下个yield, 并把上个yield表达式的值传递
+      // 获取下个yield, 并传递上个yield表达式的值
       const res = g.next(value);
       // console.log('res', res);
 
