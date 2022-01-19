@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <title>test</title>
+    <style>
+    </style>
+  </head>
+  <body>
+    <script type="module">
+    import('./js.js?c=3&d=4');
+    const data = await import('./data.js');
+    console.log('data', data);
+
+    const js = await import('./js.js?a=1&b=2');
+    console.log('js', js);
+
+    const text = await import('./text.txt');
+    console.log('text', text);
+    </script>
+  </body>
+</html>
