@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>webview</title>
+    <style>
+    </style>
+    <script src="https://lf1-cdn-tos.bytegoofy.com/goofy/ee/spm/lark/jssdk/webview/jssdk-1.0.4.js"></script>
+  </head>
+  <body>
+    <div>
+      webview222
+
+      <button class="button">Click</button>
+      <button class="button2">Click2</button>
+    </div>
+
+    <script>
+
+    document.querySelector('.button').addEventListener('click', () => {
+      // tt.miniProgram.postMessage('test');
+      tt.miniProgram.postMessage({ a: 1, b: 'test' });
+      tt.miniProgram.navigateTo({ url: '/pages/index/index' });
+      // location.href = 'http://uc.cn';
+    });
+
+    document.querySelector('.button2').addEventListener('click', () => {
+      tt.miniProgram.postMessage('test');
+      // tt.miniProgram.postMessage({ a: 1, b: 'test' });
+      history.pushState(`?${Date.now()}`);
+      // location.href = 'http://uc.cn';
+    });
+    alert(11111);
+
+    console.log(22222222222, tt);
+
+
+    </script>
+  </body>
+</html>

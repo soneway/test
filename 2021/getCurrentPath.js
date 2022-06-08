@@ -52,30 +52,60 @@ const navData = [
     ],
   },
 ];
-const path = '/2-2-2';
 
-function getCurrentPath(navData = [], path = '', res = []) {
-  for (const item of navData) {
-    const { children = [], ...rest } = item;
-    res.push(rest);
+// function getCurrentPath(navData, path) {
+//   const res = [];
+//
+//   function recursePath(arrayData = [], path = '') {
+//     for (const item of arrayData) {
+//       const { children = [], ...rest } = item;
+//       res.push(rest);
+//
+//       // 找到
+//       if (item.path === path) {
+//         return res;
+//       }
+//
+//       if (children.length) {
+//         const found = recursePath(children, path);
+//         if (found) {
+//           return found;
+//         }
+//       }
+//
+//       res.pop();
+//     }
+//   }
+//   recursePath(navData, path);
+//
+//   return res;
+// }
 
-    // 找到
-    if (item.path === path) {
-      return res;
-    }
+function getCurrentPath(navData, path) {
+  let res;
 
-    if (children.length) {
-      const found = getCurrentPath(children, path, res);
-      if (found) {
-        return found;
+  function recursePath(arrayData = [], path = '', sup = []) {
+    for (const item of arrayData) {
+      const { children = [], ...rest } = item;
+      if (item.path === path) {
+        res = [...sup, rest];
+        return res;
+      }
+
+      if (children.length) {
+        const found = recursePath(children, path, [...sup, rest]);
+        if (found) {
+          return found;
+        }
       }
     }
-
-    res.pop();
   }
+  recursePath(navData, path);
+
+  return res;
 }
 
-console.log(getCurrentPath(navData, path));
+console.log(getCurrentPath(navData, '/2-2-2'));
 // 期望返回
 const res = [
   {
