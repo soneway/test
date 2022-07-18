@@ -26,23 +26,26 @@ const cacheUrls = [
   '/test/sw.html',
 ];
 
+// 安装事件
 self.addEventListener('install', () => {
   console.log('sw.js install');
   // 新 sw 立即激活, 不用等旧 sw 失效
   self.skipWaiting();
 });
 
+// 激活事件
 self.addEventListener('activate', () => {
   console.log('sw.js activate');
 });
 
-
+// 资源请求事件
 self.addEventListener('fetch', (event) => {
   const { request } = event;
   console.log('fetch', request.url);
 
   // 只处理主文档
   if (cacheUrls.some(i => request.url.includes(i))) {
+    // 拦截响应
     event.respondWith(
       caches.match(request).then((cacheRes) => {
         console.log('match response', cacheRes);

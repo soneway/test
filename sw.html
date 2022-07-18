@@ -18,6 +18,7 @@
       //     registration.unregister();
       //   });
 
+      // 注册 sw
       serviceWorker
         .register('./sw.js')
         .then(
@@ -30,6 +31,7 @@
         );
     });
 
+    // 响应来自 sw 的消息
     serviceWorker.addEventListener('message', (event) => {
       console.log('message event', event);
       if (event.data === 'sw.reload') {
