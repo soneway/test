@@ -30,6 +30,15 @@
         );
     });
 
+    serviceWorker.addEventListener('message', (event) => {
+      console.log('message event', event);
+      if (event.data === 'sw.reload') {
+        location.reload();
+      }
+    });
+
+    console.log(4);
+
 
     </script>
   </body>

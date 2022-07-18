@@ -23,20 +23,13 @@
 
 const CACHE_NAME = 'sw.html';
 const cacheUrls = [
-  '/github/test/sw.html',
+  '/test/sw.html',
 ];
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', () => {
   console.log('sw.js install');
   // 新 sw 立即激活, 不用等旧 sw 失效
   self.skipWaiting();
-
-  // 预缓存资源
-  event.waitUntil(async () => {
-    const cache = await caches.open(CACHE_NAME);
-    console.log('cache opened');
-    return cache.addAll(cacheUrls);
-  });
 });
 
 self.addEventListener('activate', () => {
@@ -45,29 +38,62 @@ self.addEventListener('activate', () => {
 
 
 self.addEventListener('fetch', (event) => {
-  console.log('fetch: ', event.request.url);
-  event.respondWith(
-    caches.match(event.request).then((response) => {
-      console.log('match response: ', response);
+  const { request } = event;
+  console.log('fetch', request.url);
 
-      // 找到缓存
-      if (response) {
-        return response;
-      }
+  // 只处理主文档
+  if (cacheUrls.some(i => request.url.includes(i))) {
+    event.respondWith(
+      caches.match(request).then((cacheRes) => {
+        console.log('match response', cacheRes);
 
-      const request = event.request.clone();
-      return fetch(request).then((res) => {
-        if (!res) {
-          return res;
+        // 找到缓存
+        if (cacheRes) {
+          return cacheRes;
         }
 
-        const resCopy = res.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, resCopy);
+        // 没有缓存, 去请求
+        return fetch(request).then((res) => {
+          addRequest(request, res.clone());
+          return res;
         });
+      }),
+    );
 
-        return res;
+    fetch(request)
+      .then((res) => {
+        addRequest(request, res.clone());
+        return res.text();
+      })
+      .then((text) => {
+        caches.match(request)
+          .then((res) => res.text())
+          .then((cacheText) => {
+            console.log('主文档内容对比', text, cacheText);
+            // 请求内容 与 缓存内容对比
+            if (text !== cacheText) {
+              console.log('主文档内容变化, sw.reload');
+              postMessage('sw.reload');
+            }
+          });
       });
-    }),
-  );
+  }
 });
+
+function addRequest(request, res) {
+  if (!res) {
+    return;
+  }
+  caches.open(CACHE_NAME).then((cache) => {
+    cache.put(request, res);
+  });
+}
+
+function postMessage(data) {
+  self.clients.matchAll()
+    .then((clients) => {
+      clients?.forEach(function (client) {
+        client.postMessage(data);
+      });
+    });
+}
