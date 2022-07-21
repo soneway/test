@@ -43,6 +43,21 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   console.log('fetch', request.url);
 
+  const test = caches.match(request).then((cacheRes) => {
+    console.log('match response', cacheRes);
+
+    // 找到缓存
+    if (cacheRes) {
+      return cacheRes;
+    }
+
+    // 没有缓存, 去请求
+    return fetch(request).then((res) => {
+      putResponse(request, res.clone());
+      return res;
+    });
+  });
+
   // 只处理主文档
   if (cacheUrls.some(i => request.url.includes(i))) {
     // 拦截响应
@@ -57,15 +72,16 @@ self.addEventListener('fetch', (event) => {
 
         // 没有缓存, 去请求
         return fetch(request).then((res) => {
-          addRequest(request, res.clone());
+          putResponse(request, res.clone());
           return res;
         });
       }),
     );
 
+    // 始终请求主文档
     fetch(request)
       .then((res) => {
-        addRequest(request, res.clone());
+        putResponse(request, res.clone());
         return res.text();
       })
       .then((text) => {
@@ -83,7 +99,8 @@ self.addEventListener('fetch', (event) => {
   }
 });
 
-function addRequest(request, res) {
+// 保存请求响应
+function putResponse(request, res) {
   if (!res) {
     return;
   }
@@ -92,11 +109,17 @@ function addRequest(request, res) {
   });
 }
 
+// 向主文档发送消息
 function postMessage(data) {
   self.clients.matchAll()
     .then((clients) => {
-      clients?.forEach(function (client) {
+      clients?.forEach((client) => {
         client.postMessage(data);
       });
     });
 }
+
+// 接收来自主文档的消息
+self.addEventListener('message', (event) => {
+  console.log('sw onmessage', event.data);
+});

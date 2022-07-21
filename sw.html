@@ -31,13 +31,16 @@
         );
     });
 
-    // 响应来自 sw 的消息
+    // 接收来自 sw 的消息
     serviceWorker.addEventListener('message', (event) => {
       console.log('message event', event);
       if (event.data === 'sw.reload') {
         location.reload();
       }
     });
+
+    // 向 sw 发送消息
+    serviceWorker.controller.postMessage('html message');
 
     console.log(4);
 
