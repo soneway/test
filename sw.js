@@ -43,7 +43,7 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
   console.log('fetch', request.url);
 
-  const test = caches.match(request).then((cacheRes) => {
+  caches.match(request).then((cacheRes) => {
     console.log('match response', cacheRes);
 
     // 找到缓存
