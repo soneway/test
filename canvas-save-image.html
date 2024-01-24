@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>canvas-save-image</title>
+    <style>
+    </style>
+  </head>
+  <body>
+
+    <script>
+      var canvas = document.createElement('canvas');
+      canvas.width = 200;
+      canvas.height = 200;
+      var ctx = canvas.getContext('2d');
+
+      // 在Canvas上绘制内容
+      ctx.fillStyle = 'lightblue';
+      ctx.fillRect(0, 0, 200, 200);
+      ctx.font = '20px Arial';
+      ctx.fillStyle = 'black';
+      ctx.fillText('Sample', 50, 100);
+
+      // 将Canvas内容转换为图片的数据URL
+      var dataURL = canvas.toDataURL('image/png');
+
+      // 创建a标签并设置download属性来触发图片下载
+      var a = document.createElement('a');
+      a.href = dataURL;
+      a.download = 'sample.png';
+      a.click();
+
+    </script>
+  </body>
+</html>
