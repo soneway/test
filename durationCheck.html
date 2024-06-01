@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<script src="./node_modules/aspose-cad/dotnet.js"></script>
+<script
+  type="module"
+  src="./node_modules/aspose-cad/es2015/index-js.js"></script>
+
+<body>
+  <button onclick="onClick"></button>
+</body>
+
+<script>
+  const durationCheck = (() => {
+    let startTime;
+    let prevTime;
+    let times = 0;
+
+    // 1 分钟内点击 3 次
+    return function(duration = 60000, count = 3) {
+      times++;
+      const now = Date.now();
+      console.log(times, now);
+
+      if (startTime === undefined) {
+        startTime = now;
+      }
+      if (startTime === undefined) {
+        prevTime = now;
+      }
+
+      // 点击达到次数
+      if (times >= count) {
+        // 第一次点击间隔小于 1 分钟
+        if (now - startTime) {
+          startTime = now;
+          prevTime = now;
+          times = 1;
+          return true;
+        }
+        else {
+          // 重置点击次数
+          times = 1;
+        }
+
+      }
+      // 未达到次数
+      else {
+        // 上一次点击间隔大于 1 分钟
+        if (now - prevTime > duration) {
+          // 重置开始时间
+          startTime = now;
+        }
+      }
+
+      // 记录上次点击时间
+      prevTime = now;
+
+      return false;
+    };
+  })();
+
+  function onClick () {
+    console.log(durationCheck());
+  }
+
+
+</script>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<script src="./node_modules/aspose-cad/dotnet.js"></script>
+<script
+  type="module"
+  src="./node_modules/aspose-cad/es2015/index-js.js"></script>
+
+<body>
+  <input
+    id="file"
+    type="file">
+  <img id="image" />
+</body>
+
+<script>
+  window.onload = async function() {
+    document.querySelector('input').addEventListener('change', function() {
+        var reader = new FileReader();
+        reader.onload = function() {
+
+          var arrayBuffer = this.result;
+          var array = new Uint8Array(arrayBuffer);
+
+          //GET_FILE_FORMAT
+          fileFormat = Aspose.CAD.Image.getFileFormat(array);
+          console.log(fileFormat);
+
+          // LOAD
+          file = Aspose.CAD.Image.load(array);
+          console.log(file);
+
+          // SAVE
+          exportedFilePromise = Aspose.CAD.Image.save(array, new Aspose.CAD.PngOptions());
+          exportedFilePromise.then(exportedFile => {
+            console.log(exportedFile);
+
+            var urlCreator = window.URL || window.webkitURL;
+            var blob = new Blob([exportedFile], { type: 'application/octet-stream' });
+            var imageUrl = urlCreator.createObjectURL(blob);
+            document.querySelector('#image').src = imageUrl;
+          });
+        };
+
+        reader.readAsArrayBuffer(this.files[0]);
+      },
+      false);
+  };
+</script>

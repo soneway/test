@@ -1,5 +1,8 @@
 {
+  "name": "test",
+  "scripts": {},
   "dependencies": {
-    "mapbox-gl": "^3.3.0"
+    "aspose-cad": "^23.1.0",
+    "ts-auto-mock": "^3.7.1"
   }
 }

@@ -1,0 +1,90 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>内存泄露</title>
+    <style>
+    </style>
+  </head>
+  <body>
+    <!--<button onclick="myClick()">执行fn1函数</button>
+    <script>
+      function fn1 () {
+        let a = new Array(10000000);  // 这里设置了一个很大的数组对象
+
+        let b = 3;
+
+        function fn2 () {
+          let c = [1, 2, 3];
+        }
+
+        fn2();
+
+        return a;
+      }
+
+      let res = [];
+
+      function myClick () {
+        res.push(fn1());
+      }
+    </script>-->
+
+    <!--<div id="root">
+      <div class="child">我是子元素</div>
+      <button>移除</button>
+    </div>
+    <script>
+      let btn = document.querySelector('button');
+      let child = document.querySelector('.child');
+      let root = document.querySelector('#root');
+
+      btn.addEventListener('click', function() {
+        root.removeChild(child);
+      });
+    </script>-->
+
+    <!--<button>按钮</button>
+    <script>
+      document.querySelector('button').addEventListener('click', function() {
+        let obj = new Array(1000000);
+
+        console.log(obj);
+      });
+    </script>-->
+
+    <!--<button>开启定时器</button>
+    <script>
+
+      function fn1 () {
+        let largeObj = new Array(100000);
+
+        setInterval(() => {
+          let myObj = largeObj;
+        }, 1000);
+      }
+
+      document.querySelector('button').addEventListener('click', function() {
+        fn1();
+      });
+    </script>-->
+
+    <button>开启定时器</button>
+    <script>
+      function fn1() {
+        let largeObj = new Array(100000)
+        let index = 0
+
+        let timer = setInterval(() => {
+          if(index === 3) clearInterval(timer);
+          let myObj = largeObj
+          index ++
+        }, 1000)
+      }
+
+      document.querySelector('button').addEventListener('click', function() {
+        fn1()
+      })
+    </script>
+
+  </body>
+</html>
